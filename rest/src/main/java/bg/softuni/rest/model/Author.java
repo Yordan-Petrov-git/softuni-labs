@@ -1,9 +1,12 @@
 package bg.softuni.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +26,10 @@ public class Author {
   @Column(nullable = false)
   private String name;
 
-  @OneToMany
+  @JsonIgnore
+  @OneToMany(mappedBy = "author",
+         cascade = CascadeType.ALL,
+      fetch = FetchType.EAGER)
   private List<Book> books = new ArrayList<>();
 
   public long getId() {

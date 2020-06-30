@@ -1,5 +1,6 @@
 package bg.softuni.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class Book {
   @Column(nullable = false)
   private String title;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name="author_id", nullable = false)
   private Author author;
