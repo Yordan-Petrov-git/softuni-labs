@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,5 +44,11 @@ public class AuthorsController implements AuthorsNamespace {
     Author newAuthor = authorRepository.save(author);
     return ResponseEntity.
         created(ucBuilder.path("/authors/{authorId}").buildAndExpand(newAuthor.getId()).toUri()).build();
+  }
+
+  @DeleteMapping("/{authorId}")
+  public ResponseEntity<Author> delete(@PathVariable Long authorId) {
+    authorRepository.deleteById(authorId);
+    return ResponseEntity.noContent().build();
   }
 }
