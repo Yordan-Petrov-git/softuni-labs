@@ -1,33 +1,31 @@
 package bg.softuni.security.config;
 
+import bg.softuni.security.user.DemoUserDetailsService;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final PasswordEncoder passwordEncoder;
-  private final DataSource dataSource;
+  private final DemoUserDetailsService userDetailsService;
 
   public SecurityConfig(PasswordEncoder passwordEncoder,
-      DataSource dataSource) {
+      DemoUserDetailsService userDetailsService) {
     this.passwordEncoder = passwordEncoder;
-    this.dataSource = dataSource;
+    this.userDetailsService = userDetailsService;
   }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.
-        jdbcAuthentication().
-        withDefaultSchema().
-        dataSource(dataSource).
-        passwordEncoder(passwordEncoder).
-        withUser("user").password(passwordEncoder.encode("user")).roles("USER").and().
-        withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN", "USER");
+        userDetailsService(userDetailsService).
+        passwordEncoder(passwordEncoder);
   }
 
   @Override
