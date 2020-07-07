@@ -17,6 +17,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,15 @@ public class CoursesController {
         c -> EntityModel.of(c, createCourseLinks(c))
     ).map(ResponseEntity::ok).
         orElse(ResponseEntity.notFound().build());
+  }
+
+  @PostMapping
+  public ResponseEntity<EntityModel<Course>> createCourse(@RequestBody Course course) {
+    if (course.getId() != null) {
+      return ResponseEntity.badRequest().build();
+    }
+    Course result = courseRepository.save(course);
+    return ResponseEntity.ok(EntityModel.of(result, createCourseLinks(course)));
   }
 
   private Link[] createCourseLinks(Course course) {
