@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import bg.softuni.hateoas.model.Course;
+import bg.softuni.hateoas.model.OrderDTO;
 import bg.softuni.hateoas.repository.CourseRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,13 @@ public class CoursesController {
     Link self = linkTo(methodOn(CoursesController.class).
         getCourse(course.getId())).withSelfRel();
     result.add(self);
+
+    if (course.isEnabled()) {
+      Link enroll = linkTo(methodOn(OrdersController.class).createOrder(
+          new OrderDTO().setCourseId(course.getId())
+      )).withRel("enroll");
+      result.add(enroll);
+    }
 
     return result.toArray(new Link[0]);
   }
