@@ -11,9 +11,11 @@ $('#loadAuthors').click(() => {
         '<tr>' +
         '<td>' + author.id + '</td>' +
         '<td>' + author.name + '</td>' +
-        '<td><button class="book-btn" data-author-id="' + author.id + '">Show books</button></td>' +
         '<td>' +
-        '<button>Delete</button>' +
+        '<button class="book-btn" data-author-id="' + author.id + '">Show books</button>' +
+        '</td>' +
+        '<td>' +
+        '<button class="delete-btn" data-author-id="'+ author.id +  '">Delete</button>' +
         '</td>' +
         '</tr>';
 
@@ -44,3 +46,24 @@ $('body').on('click', 'button.book-btn', function() {
   }));
 
 });
+
+$('body').on('click', 'button.delete-btn', function() {
+  let authorId = $(this).data('author-id');
+  console.log("Author ID to delete is " + authorId)
+
+  fetch('http://localhost:8080/authors/'+authorId, {
+      method: 'delete'
+  })
+  .then(data => {
+    console.log("Author deleted!")
+    $('.authors-container').empty();
+    $('.books-container').empty();
+    $('#loadAuthors').click();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    location.reload();
+  });
+
+});
+
