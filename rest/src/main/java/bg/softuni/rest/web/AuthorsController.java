@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@CrossOrigin("http://localhost")
 @RestController
 public class AuthorsController implements AuthorsNamespace {
 
