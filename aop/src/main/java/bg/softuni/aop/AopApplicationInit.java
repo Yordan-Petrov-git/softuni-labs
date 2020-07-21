@@ -1,23 +1,22 @@
 package bg.softuni.aop;
 
 import bg.softuni.aop.model.Student;
+import bg.softuni.aop.slo.SLOsConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AopApplicationInit implements CommandLineRunner {
 
-  private final Student student;
+  private final SLOsConfig config;
 
-  public AopApplicationInit(Student student) {
+  public AopApplicationInit(SLOsConfig config) {
 
-    this.student = student;
+    this.config = config;
   }
 
   @Override
   public void run(String... args) throws Exception {
-    //student.sayHello();
-
-    student.echo("123");
+    System.out.println(config);
   }
 }
