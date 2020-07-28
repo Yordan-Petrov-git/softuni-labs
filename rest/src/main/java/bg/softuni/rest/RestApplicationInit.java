@@ -4,10 +4,8 @@ import bg.softuni.rest.model.Author;
 import bg.softuni.rest.model.Book;
 import bg.softuni.rest.repository.AuthorRepository;
 import bg.softuni.rest.repository.BookRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +27,7 @@ public class RestApplicationInit implements CommandLineRunner {
 
     initJovkov();
     initNikolaiHaitov();
-    initDimitarTalev();
+    initDimitarDimov();
     initElinPelin();
     initVazov();
   }
@@ -40,8 +38,8 @@ public class RestApplicationInit implements CommandLineRunner {
     );
   }
 
-  private void initDimitarTalev() {
-    initAuthor("Димитър Талев",
+  private void initDimitarDimov() {
+    initAuthor("Димитър Димов",
         "Тютюн"
     );
   }
