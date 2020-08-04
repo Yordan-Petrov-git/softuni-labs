@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Test offices</title>
+  <style>
+  </style>
+</head>
+<body>
+
+<p>Choose a city and an office</p>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script th:inline="javascript">
+
+  const offices = new Map([
+    /*[# th:each="city : ${cities}"]*/
+    ['[(${city.id})]', [
+      /*[# th:each="office : ${city.offices}"]*/
+          {id: '[(${office.id})]', name: '[(${office.name})]'},
+      /*[/]*/
+      ]
+    ],
+    /*[/]*/
+  ]);
+
+  $(document).ready(function () {
+    $('#city').change(function () {
+      //clean up the options
+      $('#office > option').each(function () {
+        if ($(this).val()) {
+          $(this).remove();
+        }
+      });
+      //get the city id and fill in offices
+      let cityId = $(this).val();
+      if (cityId) {
+        let options = ''
+        offices.get(cityId).forEach(function(value, idx) {
+          options += '<option value="'+value.id+'">'+value.name+'</option>';
+        })
+        $('#office').append(options)
+      }
+    });
+  })
+</script>
+
+<select id="city">
+  <option value="">Choose a city</option>
+  <option th:each="city : ${cities}"
+          th:value="${city.id}"
+          th:text="${city.name}">
+  </option>
+</select>
+<select id="office">
+  <option value=''>Choose an office</option>
+</select>
+
+</body>
+</html>
