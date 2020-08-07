@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RestApplicationInit implements CommandLineRunner {
 
   private final AuthorRepository authorRepository;
